@@ -1,0 +1,56 @@
+<h2>{{hero}}</h2>
+<p>hero-list works!</p>
+
+<!-- <p *ngIf="hero.isDisplayed">Je peux être affiché</p>
+<p *ngIf="!hero.isDisplayed">Je ne peux pas être affiché</p> -->
+
+<p *ngIf="hero.isDisplayed; else failed">Je peux être affiché</p>
+<ng-template #failed>Raté, try again</ng-template>
+
+<p>Mes super-héro</p>
+<table>
+    <thead>
+        <th>Id</th>
+        <th>Nom</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let hero of heroArray">
+            <td>{{ hero.id }}</td>
+            <td>{{ hero.name }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>Some des mes boutons : {{count}} </p>
+<button type="button" (click)="onButtonClicked($event, 1, false)">+1</button>
+<button type="button" (click)="onButtonClicked($event, -1, false)">-1</button>
+<button type="button" (click)="onButtonClicked($event, 2, false)">+2</button>
+<button type="button" (click)="onButtonClicked($event, 1, true)">RESET</button>
+
+
+<p>Nom hero:  {{title}}</p>
+<div>
+    <label for="name">Hero name: </label>
+    <input id="name" [(ngModel)]="title" placeholder="name">
+</div>
+
+<button type="button" (click)="uselessFunc()">get random number</button>
+
+
+<p>Nous somme le {{currentDate | date : 'Le dd/MM/yyy à HH:mm:ss' | displayZero  }}</p>
+<p>{{ myAsyncString | async }}</p>
+
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <label for="hero-name">Hero name : </label>
+    <input id="hero-name" type="text" formControlName="heroName">
+
+    <label for="hero-city">Hero name : </label>
+    <input id="hero-city" type="text" formControlName="city">
+
+    <button type="submit">Envoyer</button>
+</form>
+
+<div>
+    <p>Hero name : {{data.heroName}}</p>
+    <p>City : {{data.city}}</p>
+</div>
