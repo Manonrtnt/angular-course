@@ -21,6 +21,11 @@
     </tbody>
 </table>
 
+<div>
+    <p *ngIf = "heroArray.length == 0" appHighlight>Chargement ...</p>
+</div>
+
+
 <p>Some des mes boutons : {{count}} </p>
 <button type="button" (click)="onButtonClicked($event, 1, false)">+1</button>
 <button type="button" (click)="onButtonClicked($event, -1, false)">-1</button>
@@ -53,4 +58,16 @@
 <div>
     <p>Hero name : {{data.heroName}}</p>
     <p>City : {{data.city}}</p>
+</div>
+
+<div *ngIf="profileForm.get('heroName')!.invalid && (profileForm.get('heroName')!.dirty || profileForm.get('heroName')!.touched)" class="alertalert-danger">
+    <div *ngIf="profileForm.get('heroName')!.errors?.['required']">
+        Name is required.
+    </div>
+    <div *ngIf="profileForm.get('heroName')!.errors?.['minlength']">
+        Name must beat least 4 characters long.
+    </div>
+    <div *ngIf="profileForm.get('heroName')!.errors?.['forbiddenName']">
+        Name cannot be Bob.
+    </div>
 </div>

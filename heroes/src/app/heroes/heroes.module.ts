@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { HeroListComponent } from './hero-list/hero-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
 import {DisplayZeroPipe} from './exponent-pipe';
+import { HeroService } from './hero-list/hero-list-service';
+import { HighlightDirective } from './hilight.directive';
 
 @NgModule({
   declarations: [
     HeroListComponent,
-    DisplayZeroPipe 
+    DisplayZeroPipe,
+    HighlightDirective
   ],
   imports: [
     CommonModule,
@@ -17,7 +20,11 @@ import {DisplayZeroPipe} from './exponent-pipe';
   ],
   exports : [
     HeroListComponent,
-    DisplayZeroPipe
+    DisplayZeroPipe,
+    HighlightDirective
+  ],
+  providers : [
+    HeroService
   ]
 })
 

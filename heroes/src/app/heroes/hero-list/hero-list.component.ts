@@ -2,6 +2,8 @@ import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { Hero } from '../hero';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { forbiddenNameValidator } from '../exponent-validator';
+import{ HeroService} from'./hero-list-service';
 
 @Component({
   selector: 'app-hero-list',
@@ -38,8 +40,12 @@ export class HeroListComponent implements OnInit, OnDestroy {
   heroArray: Array<Hero> = new Array<Hero>();
 
   ngOnInit(): void {
-    this.heroArray.push(this.hero);
-    this.heroArray.push(this.hero);
+    // this.heroArray.push(this.hero);
+    // this.heroArray.push(this.hero);
+
+    this.heroService.getAllHeroes().subscribe( resHeroList => {
+      this.heroArray = resHeroList;
+    });
 
     this.myAsyncString = new Promise<string>(() => 'toto');
 
@@ -96,10 +102,13 @@ export class HeroListComponent implements OnInit, OnDestroy {
     city : "Moissac"
   };
 
-  constructor(private fb: FormBuilder){ }
+  constructor(private fb: FormBuilder, private heroService: HeroService){ }
 
   profileForm = this.fb.group({
-    heroName : [''],
+    heroName : ['', [
+      Validators.required,
+      forbiddenNameValidator(/bob/i)
+    ]],
     city : [''],
   })
 
@@ -107,10 +116,13 @@ export class HeroListComponent implements OnInit, OnDestroy {
 
   onSubmit(){
     //this.submitted = true;
-    // TODO: Use EventEmitter with form value
-    console.warn(this.profileForm.value);
+    if (this.profileForm.valid) {
     // this.data.city = this.profileForm.value.city ? this.profileForm.value.city : ""   
     // this.data.heroName = this.profileForm.value.heroName ? this.profileForm.value.heroName : ""  
     this.data = {...this.data, ...this.profileForm.value}
+    } else {
+      // TODO: Use EventEmitter with form value
+      console.warn(this.profileForm.value);
+    }
   }
 }
